@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
-                  child: const Text("save")),
+                  child: const Text("save", style: TextStyle(fontSize: 18))),
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -109,7 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         MaterialPageRoute(
                             builder: (context) => const ShowAll()));
                   },
-                  child: const Text("List Cousres")),
+                  child: const Text(
+                    "List Cousres",
+                    style: TextStyle(fontSize: 18),
+                  )),
             ],
           ),
         ],

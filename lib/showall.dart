@@ -43,42 +43,52 @@ class _ShowAllState extends State<ShowAll> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10.0, vertical: 10),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Details(
-                                      title: cours[index].title!,
-                                      desc: cours[index].desc!,
-                                      id: index,
-                                    )));
+                    child: Dismissible(
+                      confirmDismiss: (DismissDirection direction) async {
+                        return true;
                       },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.blueGrey[100],
-                        ),
-                        padding: const EdgeInsets.all(20),
-                        child: ListTile(
-                          title: Row(
+                      key: Key(cours[index].id.toString()),
+                      onDismissed: (direction) {
+                        setState(() {
+                          dataBaseHandler.delete(cours[index].id!);
+                        });
+                      },
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Details(
+                                        title: cours[index].title!,
+                                        desc: cours[index].desc!,
+                                        id: index,
+                                      )));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blueGrey[100],
+                          ),
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
+                              CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
                                 child: Text(
-                                  cours[index].id.toString(),
+                                  index.toString(),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Text(
-                                  cours[index].title!,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              Text(
+                                cours[index].title!,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],

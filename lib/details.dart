@@ -74,6 +74,7 @@ class _DetailsState extends State<Details> {
                       ),
                       Text(
                         widget.desc,
+                        maxLines: 2,
                         style: const TextStyle(fontSize: 20),
                       ),
                     ],

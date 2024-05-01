@@ -42,18 +42,30 @@ class DataBaseHandler {
   }
 
   Future<List<Cousres>> getCourse() async {
+    Cousres cousre = Cousres();
     Database dbClient = await db;
     List<Map> maps =
         await dbClient.query(TABLE_STUDENTS, columns: [ID, TiTLE, DESC]);
 
     List<Cousres> cousres = [];
-    if (maps.length > 0) {
+    if (maps.isNotEmpty) {
       for (int i = 0; i < maps.length; i++) {
         Map map = maps[i];
-        Cousres cousre = Cousres(id: map[ID], title: map[TiTLE], desc: map[DESC]);
+        Cousres cousre =
+            Cousres(id: map[ID], title: map[TiTLE], desc: map[DESC]);
         cousres.add(cousre);
       }
     }
+    if (maps.isEmpty) {
+      cousre.id = 0;
+    }
     return cousres;
+  }
+
+  Future<int> delete(int id) async {
+    Database dbClient = await db;
+    int numOfRecords = await dbClient
+        .delete(TABLE_STUDENTS, where: '$ID = ?', whereArgs: [id]);
+    return numOfRecords;
   }
 }
